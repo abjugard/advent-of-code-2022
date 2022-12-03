@@ -10,6 +10,7 @@ setup_start = time()
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 ALPHABET = alphabet.upper()
+full_alphabet = alphabet + ALPHABET
 
 base_ops = [('replace', (r'\n', ''))]
 
