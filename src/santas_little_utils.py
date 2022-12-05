@@ -71,3 +71,7 @@ def mul(numbers):
   for n in numbers:
     result *= n
   return result
+
+
+def transpose(l):
+  return list(map(list, zip(*l)))
