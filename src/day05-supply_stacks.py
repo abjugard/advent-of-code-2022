@@ -12,7 +12,7 @@ def move_crates(crates, instructions, reverse=False):
   for count, start_col, dest_col in instructions:
     stack = [crates[start_col].popleft() for _ in range(count)]
     if reverse:
-      stack = reversed(stack)
+      stack.reverse()
     crates[dest_col].extendleft(stack)
   return ''.join(head for head, *_ in crates.values())
 
