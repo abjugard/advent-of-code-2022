@@ -69,6 +69,8 @@ def neighbours(p, borders=None, diagonals=True):
 def mul(numbers):
   result = 1
   for n in numbers:
+    if n == 0:
+      return 0
     result *= n
   return result
 
