@@ -105,6 +105,9 @@ def submit_answer(today: date, answer: str, level: int = 1) -> None:
   if type(answer) not in [str, int]:
     print(f'Ignoring answer of type {type(answer)}, submission must be str or int')
     return
+  if answer in ['', 0]:
+    print('Ignoring empty answer')
+    return
   from bs4 import BeautifulSoup
   request, status_codes = import_requests()
   url = f'https://adventofcode.com/{today.year}/day/{today.day}/answer'
