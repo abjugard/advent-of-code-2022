@@ -45,6 +45,12 @@ class Point:
             self.sw, self.s, self.se]
 
 
+  def move(self, other, multiplier=1):
+    self.x += other.x * multiplier
+    self.y += other.y * multiplier
+    return self
+
+
   def distance_to(self, other):
     return abs(self.x-other.x), abs(self.y-other.y)
 

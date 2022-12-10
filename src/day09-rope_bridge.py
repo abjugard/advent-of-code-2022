@@ -12,12 +12,11 @@ def simulate_motion(head, tail):
 
 def simulate_rope(motions, rope_length=2):
   first_node, *rope = [Point() for _ in range(rope_length)]
-  visited = set([first_node])
+  visited = set([Origo])
 
   for vector, count in motions:
     for _ in range(count):
-      first_node += vector
-      next_node = first_node
+      next_node = first_node.move(vector)
       for idx in range(len(rope)):
         next_node = rope[idx] = simulate_motion(next_node, rope[idx])
       visited.add(rope[-1])
