@@ -22,9 +22,9 @@ def get_last(generator):
   return d.pop()
 
 
-def tesseract_parse(inp, chars=alphabet.upper()):
+def tesseract_parse(inp, lookup=True, chars=alphabet.upper()):
   from santas_little_ocr_lib import parse_datastructure, set_to_grid, create_image
-  data, boundary = parse_datastructure(inp)
+  data, boundary = parse_datastructure(inp, lookup)
   try:
     import pytesseract
     image = create_image(data, *boundary)

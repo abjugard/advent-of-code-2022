@@ -21,18 +21,20 @@ def __prepare_set(s):
   return s, (max_x, max_y)
 
 
-def __prepare_dict(d):
-  keys = [key for key, value in d.items() if value]
+def __prepare_dict(d, lookup):
+  keys = [key for key, value in d.items() if value == lookup]
+  if len(keys) == 0:
+    raise Exception('unusable dict')
   max_x = max(x for x, _ in keys)
   max_y = max(y for _, y in keys)
   return keys, (max_x, max_y)
 
 
-def __prepare_grid(g):
+def __prepare_grid(g, lookup):
   s = set()
   for y, xs in enumerate(g):
-    for x in [x for x, c in enumerate(xs) if c]:
-      s.append((x, y))
+    for x in [x for x, c in enumerate(xs) if c == lookup]:
+      s.add((x, y))
   return s
 
 
@@ -46,11 +48,11 @@ def set_to_grid(s, max_x, max_y):
   return result
 
 
-def parse_datastructure(inp):
+def parse_datastructure(inp, lookup):
   if isinstance(inp, set):
     data, boundary = __prepare_set(inp)
   elif isinstance(inp, dict):
-    data, boundary = __prepare_dict(inp)
+    data, boundary = __prepare_dict(inp, lookup)
   elif isinstance(inp, list):
     max_y = len(inp)
     if max_y == 0:
@@ -59,5 +61,5 @@ def parse_datastructure(inp):
     if max_x == 0 or any(len(l) != len(inp[0]) for l in inp):
       raise Exception('unusable grid')
     boundary = (max_x, max_y)
-    data = __prepare_grid(inp)
+    data = __prepare_grid(inp, lookup)
   return data, boundary
