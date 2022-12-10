@@ -4,35 +4,33 @@ from santas_little_utils import tesseract_parse
 today = day(2022, 10)
 
 
-def run_program(inp):
+def run_vm(program):
   x = 1
-  cycle = signal_strengths = y = 0
+  cycle = signal_strengths = 0
   output = set()
-  for jump, args in inp:
+  for jump, value in program:
     for _ in range(jump):
-      pos = cycle % 40
-      if pos in range(x-1, x+2):
-        output.add((pos, y))
-      if pos == 39:
-        y += 1
+      cursor = cycle % 40
+      if cursor in range(x-1, x+2):
+        output.add((cursor, cycle // 40))
       cycle += 1
       if cycle % 40 == 20:
         signal_strengths += cycle * x
-    x += args
+    x += value
   return signal_strengths, tesseract_parse(output)
 
 
 def parse(line):
   if ' ' in line:
-    _, argument = line.split(' ')
-    return 2, int(argument)
+    _, value = line.split(' ')
+    return 2, int(value)
   else:
     return 1, 0
 
 
 def main():
-  inp = get_data(today, [('func', parse)])
-  star1, star2 = run_program(inp)
+  program = get_data(today, [('func', parse)])
+  star1, star2 = run_vm(program)
   print(f'{today} star 1 = {star1}')
   print(f'{today} star 2 = {star2}')
 
