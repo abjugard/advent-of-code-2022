@@ -1,7 +1,6 @@
 from santas_little_helpers import day, get_data, timed
 from santas_little_utils import build_dict_map, neighbours
 import networkx as nx
-import sys
 
 today = day(2022, 12)
 G = nx.DiGraph()
@@ -12,10 +11,7 @@ def distance_to_hill(start, target):
 
 
 def calculate_best_start(low_positions, target):
-  shortest = sys.maxsize
-  for p in low_positions:
-    shortest = min(shortest, nx.shortest_path_length(G, p, target))
-  return shortest
+  return min(nx.shortest_path_length(G, p, target) for p in low_positions)
 
 
 def construct_graph(m):
