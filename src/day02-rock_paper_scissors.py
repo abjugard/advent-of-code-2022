@@ -33,7 +33,7 @@ def play_smartly(guide):
 
 def parse(inp):
   them, us = inp.split(' ')
-  return (ord(them)-ord('A'), ord(us)-ord('X'))
+  return ord(them)-ord('A'), ord(us)-ord('X')
 
 
 def main():
