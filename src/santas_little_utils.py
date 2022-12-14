@@ -79,3 +79,7 @@ def mul(numbers):
 
 def transpose(l):
   return list(map(list, zip(*l)))
+
+
+def flatten(list_of_lists):
+  return [item for l in list_of_lists for item in l]

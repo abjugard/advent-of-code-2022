@@ -1,7 +1,8 @@
 from santas_little_helpers import day, get_data, timed
-from santas_little_utils import mul
+from santas_little_utils import mul, flatten
 from itertools import zip_longest
 from functools import cmp_to_key
+import json
 
 today = day(2022, 13)
 
@@ -25,31 +26,33 @@ def compare(l, r):
   return 0
 
 
-def packets_in_order(inp):
-  return sum(idx + 1 for idx, pair in enumerate(inp) if compare(*pair) < 0)
+Packet = cmp_to_key(compare)
 
 
-def sort_and_search(inp, *divider_packets):
-  packets = [item for grp in inp for item in grp]
+def packets_in_order(packets):
+  return sum(idx + 1 for idx, (a, b) in enumerate(packets) if a < b)
+
+
+def sort_and_search(packets, *divider_packets):
+  divider_packets = list(map(Packet, divider_packets))
+
+  packets = flatten(packets)
   packets.extend(divider_packets)
-
-  packets = sorted(packets, key=cmp_to_key(compare))
+  packets.sort()
 
   def search():
-    keys = [str(p) for p in packets]
-    to_find = [str(p) for p in divider_packets]
-    for idx, key in enumerate(keys):
-      if key in to_find:
+    for idx, packet in enumerate(packets):
+      if packet in divider_packets:
         yield idx + 1
 
   return mul(search())
 
 
 def main():
-  inp = list(get_data(today, [('func', eval)], groups=True))
-  inp = [list(grp) for grp in inp]
-  print(f'{today} star 1 = {packets_in_order(inp)}')
-  print(f'{today} star 2 = {sort_and_search(inp, [[2]], [[6]])}')
+  packets = get_data(today, [('func', json.loads), ('func', Packet)], groups=True)
+  packets = [list(grp) for grp in packets]
+  print(f'{today} star 1 = {packets_in_order(packets)}')
+  print(f'{today} star 2 = {sort_and_search(packets, [[2]], [[6]])}')
 
 
 if __name__ == '__main__':
