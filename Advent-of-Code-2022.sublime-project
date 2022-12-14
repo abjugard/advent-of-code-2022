@@ -27,7 +27,7 @@
             "path": "/usr/local/opt/python@3.10/libexec/bin:/usr/local/opt/python@3.10/bin:$PATH",
             "windows":
             {
-                "shell_cmd": "python3.10 -OO -u \"$file\"",
+                "shell_cmd": "python3.11 -OO -u \"$file\"",
             },
         },
     ],
