@@ -30,18 +30,18 @@ def locate_distress_beacon(min_y=0, max_y=4_000_000):
         continue
       x_ranges.append((sensor.x-row_radius, sensor.x+row_radius))
 
-    blocks = []
+    contiguous_ranges = []
     (start, end), *x_ranges = sorted(x_ranges)
     for next_start, next_end in x_ranges:
       if end >= next_start:
         end = max(end, next_end)
       else:
-        blocks.append((start, end))
+        contiguous_ranges.append((start, end))
         start, end = next_start, next_end
-    blocks.append((start, end))
+    contiguous_ranges.append((start, end))
 
-    if len(blocks) == 2:
-      (_, high) = blocks[0]
+    if len(contiguous_ranges) == 2:
+      (_, high), *_ = contiguous_ranges
       x = high + 1
       return x*max_y + y
 
