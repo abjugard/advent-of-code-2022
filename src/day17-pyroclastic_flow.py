@@ -44,12 +44,8 @@ def calc_shape(jet_idx, shape):
 
 
 def cache_key(height):
-  col_height = []
-  for col in range(tower_width):
-    col_height.append(max(y for x, y in tower if x == col))
-  ys = range(min(col_height), height)
-
-  return tuple(sorted([(x, height-y) for x, y in tower if y in ys]))
+  magic = 16
+  return tuple(sorted([(x, height-y) for x, y in tower if y >= height-magic]))
 
 
 def play_tetris(checkpoints):
