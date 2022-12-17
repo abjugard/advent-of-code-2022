@@ -3,40 +3,13 @@ from santas_little_helpers import day, get_data, timed
 today = day(2022, 17)
 
 
-def build_shapes():
-  shapes = [
-    ['####'],
-
-    [' # ',
-     '###',
-     ' # '],
-
-    ['  #',
-     '  #',
-     '###'],
-
-    ['#',
-     '#',
-     '#',
-     '#'],
-
-    ['##',
-     '##']
-  ]
-
-  for shape in shapes:
-    n_shape = []
-    # y is incresing, so reverse the rows
-    for y, xs in enumerate(reversed(shape)):
-      for x, v in enumerate(xs):
-        if v == '#':
-          n_shape.append((x+2, y))
-    yield n_shape
-
-
 tower_width = 7
 tower = {(x, 0) for x in range(tower_width)}
-shapes = None
+shapes = [[(2, 0), (3, 0), (4, 0), (5, 0)],
+          [(3, 0), (2, 1), (3, 1), (4, 1), (3, 2)],
+          [(2, 0), (3, 0), (4, 0), (4, 1), (4, 2)],
+          [(2, 0), (2, 1), (2, 2), (2, 3)],
+          [(2, 0), (3, 0), (2, 1), (3, 1)]]
 jets = None
 seen = dict()
 
@@ -112,9 +85,8 @@ def play_tetris(checkpoints):
 
 
 def main():
-  global jets, shapes
+  global jets
   jets = next(get_data(today))
-  shapes = list(build_shapes())
 
   star_gen = play_tetris(checkpoints=[2022, 1e12])
   print(f'{today} star 1 = {next(star_gen)}')
