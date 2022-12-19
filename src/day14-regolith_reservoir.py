@@ -47,8 +47,9 @@ def populate_cave(line):
 def main():
   list(get_data(today, [('func', populate_cave)]))
   height = max(p[1] for p in cave)
+  width = max(p[0] for p in cave)
 
-  for x in range(-1000, 1000):
+  for x in range(-width*2, width*2):
     cave.add((x, height + 2))
 
   star_gen = simulate_sand(height, (500, 0))
