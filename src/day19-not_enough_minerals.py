@@ -38,6 +38,7 @@ def play_starcraft(c_ore, c_cla, c_obs_ore, c_obs_cla, c_geo_ore, c_geo_obs, tim
     nonlocal best
     ore_b, cla_b, obs_b, geo_b = bots
     geo = minerals[-1]
+    best = max(best, geo)
 
     # try to smartly exit if we don't think the run will result in a better geode count
     low_potential = sum(range(time_left)) + geo_b * time_left + geo <= best
@@ -65,8 +66,6 @@ def play_starcraft(c_ore, c_cla, c_obs_ore, c_obs_cla, c_geo_ore, c_geo_obs, tim
         for n_target in range(4):
           build_target_robot(time_left, n_target, n_b, n_m)
         return
-      geo = minerals[-1]
-      best = max(best, geo)
 
 
   best = 0
@@ -96,8 +95,7 @@ def parse(line):
 def main():
   blueprints = list(get_data(today, [('func', parse)]))
   print(f'{today} star 1 = {part1(blueprints)}')
-  # part 2 does not work 😞
-  # print(f'{today} star 2 = {part2(blueprints)}')
+  print(f'{today} star 2 = {part2(blueprints)}')
 
 
 if __name__ == '__main__':
