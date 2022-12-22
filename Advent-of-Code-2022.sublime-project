@@ -9,10 +9,10 @@
             "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
             "name": "Project: PyPy 3",
             "selector": "source.python",
-            "shell_cmd": "pypy3 -OO -u \"$file\"",
+            "shell_cmd": "pypy3 -u \"$file\"",
             "windows":
             {
-                "shell_cmd": "pypy3 -OO -u \"$file\"",
+                "shell_cmd": "pypy3 -u \"$file\"",
             },
         },
         {
@@ -23,11 +23,11 @@
             "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
             "name": "Project: Python 3",
             "selector": "source.python",
-            "shell_cmd": "python3.11 -OO -u \"$file\"",
+            "shell_cmd": "python3.11 -u \"$file\"",
             "path": "/usr/local/opt/python@3.10/libexec/bin:/usr/local/opt/python@3.10/bin:$PATH",
             "windows":
             {
-                "shell_cmd": "python3.11 -OO -u \"$file\"",
+                "shell_cmd": "python3.11 -u \"$file\"",
             },
         },
     ],
