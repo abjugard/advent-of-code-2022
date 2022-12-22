@@ -26,9 +26,10 @@ def part2(inp):
   humn = sympy.Symbol('humn')
 
   def solve_rec(monkey):
-    args = lookup[monkey]
     if monkey == 'humn':
       return humn
+      
+    args = lookup[monkey]
     if len(args) == 1:
       return args[0]
 
