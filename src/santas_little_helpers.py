@@ -89,7 +89,7 @@ def get_data(today: date = date.today(), ops: list = base_ops, groups: bool = Fa
 
   op_chain = list(build_op_chain(ops))
   with file_path.open() as f:
-    lines = f.read().strip().split('\n\n' if groups else '\n')
+    lines = f.read().rstrip().split('\n\n' if groups else '\n')
   if groups:
     def format_group(group_lines):
       for line in group_lines.split('\n'):

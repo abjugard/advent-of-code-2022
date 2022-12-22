@@ -37,17 +37,18 @@ def tesseract_parse(inp, lookup=True, chars=alphabet.upper()):
     return None
 
 
-def build_dict_map(map_data, conv_func=int):
+def build_dict_map(map_data, conv_func=None, criteria=None):
   the_map = dict()
-  def get_value(h):
-    return conv_func(h) if conv_func is not None else h
+  def get_value(c):
+    return c if conv_func is None else conv_func(c)
+  h, w = 0, 0
   for y, xs in enumerate(map_data):
-    the_map.update({(x, y): get_value(h) for x, h in enumerate(xs)})
-  return the_map
-
-
-def build_grid(map_data):
-  return [xs for xs in map_data]
+    for x, c in enumerate(xs):
+      if criteria is None or c in criteria:
+        the_map[(x, y)] = get_value(c)
+      w = max(w, x)
+    h = max(h, y)
+  return the_map, (w+1, h+1)
 
 
 def neighbours(p, borders=None, diagonals=True):

@@ -15,7 +15,7 @@ def calculate_best_start(low_positions, target):
 
 
 def construct_graph(m):
-  d = build_dict_map(m, conv_func=ord)
+  d, _ = build_dict_map(m, conv_func=ord)
   low_positions = []
 
   for p, value in d.items():

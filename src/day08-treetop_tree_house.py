@@ -3,7 +3,6 @@ from santas_little_utils import build_dict_map, directions_4, mul
 from itertools import product
 
 today = day(2022, 8)
-forest = None
 
 def visibility(comparison, x, y, xd, yd, depth=False):
   pd = x-xd, y-yd
@@ -30,13 +29,12 @@ def scenic_score(p):
 
 
 def most_scenic_tree():
-  w, h = max(x for x, _ in forest), max(y for _, y in forest)
   return max(scenic_score(p) for p in product(range(1, h), range(1, w)))
 
 
 def main():
-  global forest
-  forest = build_dict_map(get_data(today))
+  global forest, w, h
+  forest, (w, h) = build_dict_map(get_data(today), conv_func=int)
   print(f'{today} star 1 = {trees_visible()}')
   print(f'{today} star 2 = {most_scenic_tree()}')
 
