@@ -26,12 +26,12 @@ def plant_seedlings(cave, checkpoints=[10]):
     if t in checkpoints:
       yield empty_ground(cave)
     try_move = dict()
-    n_cave = dict()
+    n_cave = set()
     for elf in cave:
       p = Point(*elf)
       ns = set(neighbours(elf, cave))
       if len(ns) == 0:
-        n_cave[elf] = '#'
+        n_cave.add(elf)
         continue
       for o in range(4):
         i = (t + o) % 4
@@ -40,13 +40,13 @@ def plant_seedlings(cave, checkpoints=[10]):
           try_move[elf] = target
           break
       else:
-        n_cave[elf] = '#'
+        n_cave.add(elf)
     if len(try_move) == 0:
       yield t+1
     for cur, n_pos in try_move.items():
       others = {t_pos for other, t_pos in try_move.items() if cur != other}
       unique = n_pos not in others
-      n_cave[n_pos if unique else cur] = '#'
+      n_cave.add(n_pos if unique else cur)
     cave = n_cave
     t += 1
 
@@ -64,7 +64,8 @@ def parse(line):
 def main():
   inp = list(get_data(today))
   cave_scan, _ = build_dict_map(inp, criteria='#')
-  star_gen = plant_seedlings(cave_scan)
+  cave = set(cave_scan.keys())
+  star_gen = plant_seedlings(cave)
   print(f'{today} star 1 = {next(star_gen)}')
   print(f'{today} star 2 = {next(star_gen)}')
 
