@@ -16,6 +16,12 @@ def get_iterator(variable):
     return get_iterator([variable])
 
 
+def skip(count, it):
+  for _ in range(count):
+    next(it)
+  return next(it)
+
+
 def get_last(generator):
   d = deque(generator, maxlen=2)
   d.pop()
