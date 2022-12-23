@@ -1,4 +1,4 @@
-from santas_little_helpers import day, get_data, timed, submit_answer
+from santas_little_helpers import day, get_data, timed
 from santas_little_utils import mul
 import re
 

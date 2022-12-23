@@ -53,7 +53,7 @@ def flat_move(pos, direction, backoff=None):
   x, y = pos
   xd, yd = direction
   n_pos = (x+xd) % w, (y+yd) % h
-  c = at_pos(n_pos)
+  c = board[n_pos] if n_pos in board else None
   if c == '.':
     return direction, n_pos
   if backoff is None:
@@ -79,10 +79,6 @@ def fold(pos, direction):
     direction = turn(direction, d)
 
   return n_pos, direction
-
-
-def at_pos(pos):
-  return board[pos] if pos in board else None
 
 
 def cube_move(pos, direction):

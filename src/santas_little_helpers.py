@@ -61,6 +61,11 @@ def format_line(line, op_chain):
   return reduce(lambda data, op: op(data), op_chain, line)
 
 
+def import_requests():
+  from requests import request, codes
+  return request, codes
+
+
 def get_data(today: date = date.today(), ops: list = base_ops, groups: bool = False) -> Iterator:
   if not aoc_data.exists():
     aoc_data.mkdir()
@@ -110,11 +115,6 @@ def submit_answer(today: date, answer: str, level: int = 1) -> None:
   soup = BeautifulSoup(res.content, 'html.parser')
   for content in soup.find_all('article'):
     print(content.text)
-
-
-def import_requests():
-  from requests import request, codes
-  return request, codes
 
 
 def time_fmt(delta: float) -> (float, str):
