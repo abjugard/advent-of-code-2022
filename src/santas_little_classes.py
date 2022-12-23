@@ -18,21 +18,34 @@ class Point:
 
 
   @property
-  def n  (self): return Point(self.x,   self.y+1)
+  def n  (self): return Point(self.x,   self.y-1)
   @property
-  def ne (self): return Point(self.x+1, self.y+1)
+  def ne (self): return Point(self.x+1, self.y-1)
   @property
   def e  (self): return Point(self.x+1, self.y)
   @property
-  def se (self): return Point(self.x+1, self.y-1)
+  def se (self): return Point(self.x+1, self.y+1)
   @property
-  def s  (self): return Point(self.x,   self.y-1)
+  def s  (self): return Point(self.x,   self.y+1)
   @property
-  def sw (self): return Point(self.x-1, self.y-1)
+  def sw (self): return Point(self.x-1, self.y+1)
   @property
   def w  (self): return Point(self.x-1, self.y)
   @property
-  def nw (self): return Point(self.x-1, self.y+1)
+  def nw (self): return Point(self.x-1, self.y-1)
+
+
+  @property
+  def t(self):
+    return (self.x, self.y)
+  @property
+  def copy(self, offset=None):
+    x = self.x
+    y = self.y
+    if offset is not None:
+      x += offset.x
+      y += offset.y
+    return Point(x, y)
 
 
   @property
