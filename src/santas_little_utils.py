@@ -63,6 +63,8 @@ def neighbours(p, borders=None, diagonals=True):
       return True
     elif isinstance(borders, dict):
       return p_n in borders
+    elif isinstance(borders, set):
+      return p_n in borders
     elif isinstance(borders, list):
       x_n, y_n = p_n
       h = len(borders)
