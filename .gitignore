@@ -177,6 +177,8 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/windows
 
 # Project settings
-data/
 config.json
+last_response.html
+data/
+.submission-history/
 src/dayXX*
