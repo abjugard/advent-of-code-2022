@@ -50,7 +50,7 @@ class Point:
 
   @property
   def direct_neighbours(self):
-    return [self.n, self.e, self.s, self.w]
+    return set([self.n, self.e, self.s, self.w, self])
   @property
   def neighbours(self):
     return [self.nw, self.n, self.ne,
