@@ -65,6 +65,7 @@ def __handle_response__(today: date, answer, level, submission_history, text):
   submission_history[str(answer)] = response
   with file_path.open('w') as f:
     json.dump(submission_history, f, indent=4)
+  return response['success']
 
 
 def is_solved(submission_history):
@@ -77,24 +78,26 @@ def import_requests():
   return request, codes, BeautifulSoup
 
 
-def submit_answer(today: date, answer, level: int = 1) -> None:
-  if type(answer) not in [str, int]:
-    print(f'Ignoring answer of type {type(answer)}, submission must be str or int')
-    return
-  if answer in ['', 0]:
-    print('Ignoring empty answer')
-    return
+def submit_answer(today: date, answer, level: int = 1, force = False) -> None:
+  if not force:
+    if type(answer) not in [str, int]:
+      print(f'Ignoring answer of type {type(answer)}, submission must be str or int')
+      return False
+    if answer in ['', 0]:
+      print('Ignoring empty answer')
+      return False
   submission_history = get_submission_history(today, level)
   if is_solved(submission_history):
     print(f'Already solved {today} part {level}')
-    return
-  if str(answer) in submission_history:
-    response = submission_history[str(answer)]
-    print(f"Already tried that at {response['timestamp']}", end='')
-    if 'hint' in response:
-      print(f", hint: {response['hint']}", end='')
-    print()
-    return
+    return True
+  if not force:
+    if str(answer) in submission_history:
+      response = submission_history[str(answer)]
+      print(f"Already tried that at {response['timestamp']}", end='')
+      if 'hint' in response:
+        print(f", hint: {response['hint']}", end='')
+      print()
+      return False
 
   request, status_codes, BeautifulSoup = import_requests()
   url = f'https://adventofcode.com/{today.year}/day/{today.day}/answer'
@@ -106,9 +109,10 @@ def submit_answer(today: date, answer, level: int = 1) -> None:
   soup = BeautifulSoup(res.content, 'html.parser')
   content = soup.find_all('article')[0]
   try:
-    __handle_response__(today, answer, level, submission_history, content.text)
+    return __handle_response__(today, answer, level, submission_history, content.text)
   except Exception:
     print(content.text)
+    return False
 
 
 def redirect_stdout():
